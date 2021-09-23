@@ -1,4 +1,4 @@
-const BasePage = require('./base.page')
+const BasePage = require('./base.page');
 
 const base_url = 'https://automation-playground.blogspot.com/'
 
