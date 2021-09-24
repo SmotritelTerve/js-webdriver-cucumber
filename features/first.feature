@@ -1,4 +1,4 @@
-Feature: Automation Playground blog
+Feature: Verify the blog's title - sanity test
 As a test automation enthusiast
 I want to write test for Automation Playground blog
 So that I can practice Cucumber
