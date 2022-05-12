@@ -1,6 +1,6 @@
 const BasePage = require('./base.page')
 
-const elements_url = 'https://automation-playground.blogspot.com/p/elements.html';
+const elements_url = 'https://ui-playground.blogspot.com/p/elements.html';
 const inputFieldAndButtonLinkXpath = "//li/a[contains(text(),'Input field and Button')]";
 const elementsPageTitleXpath = "//h3[@class = 'post-title entry-title' and contains(text(), 'Elements')]";
 
