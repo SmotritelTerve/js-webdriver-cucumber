@@ -1,6 +1,6 @@
 const BasePage = require('./base.page.js');
 
-const inputFieldAndButton_url = 'https://automation-playground.blogspot.com/2016/01/input-field-and-button.html';
+const inputFieldAndButton_url = 'https://ui-playground.blogspot.com/2022/05/input-field-and-button.html';
 const usernameFieldXpath = "//input[@id='user']";
 const submitBtnXpath = "//button[@name='submit_action']";
 const nameTextAreaXpath = "//textarea[@id='enteredName']";

@@ -1,6 +1,6 @@
 const BasePage = require('./base.page');
 
-const base_url = 'https://automation-playground.blogspot.com/'
+const base_url = 'https://ui-playground.blogspot.com/'
 
 class HomePage extends BasePage {
     open() {

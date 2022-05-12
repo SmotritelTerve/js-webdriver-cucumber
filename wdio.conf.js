@@ -1,4 +1,6 @@
-const moment= require('moment')
+const moment= require('moment');
+const { generate } = require('multiple-cucumber-html-reporter');
+const { removeSync } = require('fs-extra');
 
 exports.config = {
     //
@@ -136,8 +138,13 @@ exports.config = {
     // see also: https://webdriver.io/docs/dot-reporter
     
     reporters: [['allure', {
-            outputDir: './reports/allure-results'
-        }]],    
+        outputDir: './reports/allure-results'
+    }],
+    ['cucumberjs-json', {
+        jsonFolder: './reports/html-results',
+        language: 'en',
+    },
+    ]],
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
@@ -182,8 +189,24 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+     onPrepare: () => {
+        // Remove the `.tmp/` folder that holds the json and report files
+        removeSync('reports/html-results');
+      },
+      /**
+       * Gets executed after all workers got shut down and the process is about to exit.
+       */
+      onComplete: () => {
+        // Generate the report when it all tests are done
+        generate({
+          // Required
+          // This part needs to be the same path where you store the JSON files
+          // default = '.tmp/json/'
+          jsonDir: 'reports/html-results',
+          reportPath: 'reports/html-results',
+          // for more options see https://github.com/wswebcreation/multiple-cucumber-html-reporter#options
+        });
+      },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
