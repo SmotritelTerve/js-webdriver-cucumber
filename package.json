@@ -4,7 +4,10 @@
   "description": "Test automation with WebriverIO and Cucumber",
   "main": "index.js",
   "scripts": {
-    "test:bdd": "npx wdio run ./wdio.conf.js",
+    "test:bdd": "wdio run ./wdio.conf.js",
+    "test:bdd:smoke": "wdio run ./wdio.conf.js --cucumberOpts.tagExpression '@smoke'",
+    "test:bdd:negative": "wdio run ./wdio.conf.js --cucumberOpts.tagExpression '@negative'",
+    "test:bdd:wip": "wdio run ./wdio.conf.js --cucumberOpts.tagExpression '@wip'",
     "generate:allure": "allure generate reports/allure-results/"
   },
   "repository": {
