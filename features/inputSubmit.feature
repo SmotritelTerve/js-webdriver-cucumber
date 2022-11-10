@@ -1,7 +1,7 @@
 Feature: Input field and Submit button
 
 Scenario: Verify Input and Submit page
-  Given the Automation Playground blog open
+  Given the UI Playground blog open
   When I click Elements link in main menu
       And I click Input field and Button link on Elements page
       And I enter <name> in name input field

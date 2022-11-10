@@ -24,7 +24,7 @@
     "@wdio/cucumber-framework": "^7.12.2",
     "@wdio/local-runner": "^7.12.2",
     "@wdio/spec-reporter": "^7.10.1",
-    "chromedriver": "^101",
+    "chromedriver": "^107",
     "fs-extra": "^10.0.0",
     "multiple-cucumber-html-reporter": "^1.18.0",
     "wdio-chromedriver-service": "^7.2.0",
