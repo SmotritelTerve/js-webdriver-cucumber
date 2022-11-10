@@ -14,9 +14,16 @@ class HomePage extends BasePage {
     }
 
     async closeCookieChoiceInfo() {
-        if (this.cookieChoiceInfo.isDisplayed()) {
+        let numberOfCookieChoiceInfo = await this.getNumberOfCookieChoiceInfo();
+        if (numberOfCookieChoiceInfo > 0) {
             await this.cookieChoiceDismissBtn.click();
         }
+
+    }
+
+    async getNumberOfCookieChoiceInfo() {
+        let numberOfElements = await browser.$$(cookieChoiceDismissBtnXpath).length;
+        return numberOfElements;
 
     }
 }
