@@ -3,7 +3,8 @@ const HomePage = require('../pages/home.page');
 
 Given('the UI Playground blog open', async function () {
   HomePage.open();
-  await HomePage.closeCookieChoiceInfo();
+  // ToDo: deal with the cookies info
+  // await HomePage.closeCookieChoiceInfo();
 });
 
 Then('the UI Playground blog title should be equal {string}', async function (title) {

@@ -9,4 +9,4 @@ Scenario: Verify the blog's title
     Then the UI Playground blog title should be equal <title>
      Examples:
             |title                   |
-            |"Automation Playground" |
+            |"UI Playground" |

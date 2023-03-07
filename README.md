@@ -19,3 +19,6 @@ run negative test suite
 ```
 npm run test:bdd:negative
 ```
+use as reference
+
+https://github.com/webdriverio/cucumber-boilerplate

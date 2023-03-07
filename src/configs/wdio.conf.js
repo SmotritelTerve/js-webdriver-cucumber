@@ -1,19 +1,17 @@
-const moment= require('moment');
-const { generate } = require('multiple-cucumber-html-reporter');
-const { removeSync } = require('fs-extra');
-
 exports.config = {
     //
     // ====================
     // Runner Configuration
     // ====================
-    //
+    // WebdriverIO supports running e2e tests as well as unit and component tests.
+    runner: 'local',
+    
     //
     // ==================
     // Specify Test Files
     // ==================
     // Define which test specs should run. The pattern is relative to the directory
-    // from which `wdio` was called.
+    // of the configuration file being run.
     //
     // The specs are defined as an array of spec files (optionally using wildcards
     // that will be expanded). The test for each spec file will be run in a separate
@@ -25,7 +23,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './features/**/*.feature'
+        '../features/**/*.feature'
     ],
     // Patterns to exclude.
     exclude: [
@@ -51,7 +49,7 @@ exports.config = {
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
-    // https://docs.saucelabs.com/reference/platforms-configurator
+    // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
     
@@ -74,7 +72,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'error',
     //
     // Set specific log levels per logger
     // loggers:
@@ -98,7 +96,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'http://localhost',
+    baseUrl: 'https://ui-playground.blogspot.com/',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -136,20 +134,14 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    
-    reporters: [['allure', {
-        outputDir: './reports/allure-results'
-    }],
-    ['cucumberjs-json', {
-        jsonFolder: './reports/html-results',
-        language: 'en',
-    },
-    ]],
+    reporters: ['spec'],
+
+
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
         // <string[]> (file/dir) require files before executing features
-        require: ['./features/step-definitions/first.steps.js', './features/step-definitions/inputSubmit.steps.js'],
+        require: ['./src/step-definitions/*steps.js', './src/step-definitions/hooks.js'],
         // <boolean> show full backtrace for errors
         backtrace: false,
         // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
@@ -158,18 +150,14 @@ exports.config = {
         dryRun: false,
         // <boolean> abort the run on first failure
         failFast: false,
-        // <string[]> (type[:path]) specify the output format, optionally supply PATH to redirect formatter output (repeatable)
-        format: ['pretty'],
         // <boolean> hide step definition snippets for pending steps
         snippets: true,
         // <boolean> hide source uris
         source: true,
-        // <string[]> (name) specify the profile to use
-        profile: [],
         // <boolean> fail if there are any undefined or pending steps
         strict: false,
         // <string> (expression) only execute the features or scenarios with tags matching the expression
-        tagExpression: '',
+        tagExpression: '@1',
         // <number> timeout for step definitions
         timeout: 60000,
         // <boolean> Enable this config to treat undefined definitions as warnings.
@@ -189,34 +177,27 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-     onPrepare: () => {
-        // Remove the `.tmp/` folder that holds the json and report files
-        removeSync('reports/html-results');
-      },
-      /**
-       * Gets executed after all workers got shut down and the process is about to exit.
-       */
-      onComplete: () => {
-        // Generate the report when it all tests are done
-        generate({
-          // Required
-          // This part needs to be the same path where you store the JSON files
-          // default = '.tmp/json/'
-          jsonDir: 'reports/html-results',
-          reportPath: 'reports/html-results',
-          // for more options see https://github.com/wswebcreation/multiple-cucumber-html-reporter#options
-        });
-      },
+    // onPrepare: function (config, capabilities) {
+    // },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
      * @param  {String} cid      capability id (e.g 0-0)
      * @param  {[type]} caps     object containing capabilities for session that will be spawn in the worker
      * @param  {[type]} specs    specs to be run in the worker process
-     * @param  {[type]} args     object that will be merged with the main configuration once worker is initialised
+     * @param  {[type]} args     object that will be merged with the main configuration once worker is initialized
      * @param  {[type]} execArgv list of string arguments passed to the worker process
      */
     // onWorkerStart: function (cid, caps, specs, args, execArgv) {
+    // },
+    /**
+     * Gets executed just after a worker process has exited.
+     * @param  {String} cid      capability id (e.g 0-0)
+     * @param  {Number} exitCode 0 - success, 1 - fail
+     * @param  {[type]} specs    specs to be run in the worker process
+     * @param  {Number} retries  number of retries used
+     */
+    // onWorkerEnd: function (cid, exitCode, specs, retries) {
     // },
     /**
      * Gets executed just before initialising the webdriver session and test framework. It allows you
@@ -224,8 +205,9 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that are to be run
+     * @param {String} cid worker id (e.g. 0-0)
      */
-    // beforeSession: function (config, capabilities, specs) {
+    // beforeSession: function (config, capabilities, specs, cid) {
     // },
     /**
      * Gets executed before test execution begins. At this point you can access to all global
@@ -255,45 +237,44 @@ exports.config = {
     /**
      *
      * Runs before a Cucumber Scenario.
-     * @param {ITestCaseHookParameter} world world object containing information on pickle and test step
+     * @param {ITestCaseHookParameter} world    world object containing information on pickle and test step
+     * @param {Object}                 context  Cucumber World object
      */
-    // beforeScenario: function (world) {
+    // beforeScenario: function (world, context) {
     // },
     /**
      *
      * Runs before a Cucumber Step.
      * @param {Pickle.IPickleStep} step     step data
      * @param {IPickle}            scenario scenario pickle
+     * @param {Object}             context  Cucumber World object
      */
-    // beforeStep: function (step, scenario) {
+    // beforeStep: function (step, scenario, context) {
     // },
     /**
      *
      * Runs after a Cucumber Step.
-     * @param {Pickle.IPickleStep} step     step data
-     * @param {IPickle}            scenario scenario pickle
-     * @param {Object}             result   results object containing scenario results
-     * @param {boolean}            result.passed   true if scenario has passed
-     * @param {string}             result.error    error stack if scenario failed
-     * @param {number}             result.duration duration of scenario in milliseconds
+     * @param {Pickle.IPickleStep} step             step data
+     * @param {IPickle}            scenario         scenario pickle
+     * @param {Object}             result           results object containing scenario results
+     * @param {boolean}            result.passed    true if scenario has passed
+     * @param {string}             result.error     error stack if scenario failed
+     * @param {number}             result.duration  duration of scenario in milliseconds
+     * @param {Object}             context          Cucumber World object
      */
-
-     afterStep: function (step, context, { error, result, duration, passed, retries }) {
-             if(error) {
-                 browser.saveScreenshot('./reports/screenshots/Fail_' + 
-                                        moment().format('DD-MMM-YYYY-HH-MM-SS') + '.png')
-             }
-          },
+    // afterStep: function (step, scenario, result, context) {
+    // },
     /**
      *
-     * Runs before a Cucumber Scenario.
-     * @param {ITestCaseHookParameter} world  world object containing information on pickle and test step
-     * @param {Object}                 result results object containing scenario results
-     * @param {boolean}                result.passed   true if scenario has passed
-     * @param {string}                 result.error    error stack if scenario failed
-     * @param {number}                 result.duration duration of scenario in milliseconds
+     * Runs after a Cucumber Scenario.
+     * @param {ITestCaseHookParameter} world            world object containing information on pickle and test step
+     * @param {Object}                 result           results object containing scenario results
+     * @param {boolean}                result.passed    true if scenario has passed
+     * @param {string}                 result.error     error stack if scenario failed
+     * @param {number}                 result.duration  duration of scenario in milliseconds
+     * @param {Object}                 context          Cucumber World object
      */
-    // afterScenario: function (world, result) {
+    // afterScenario: function (world, result, context) {
     // },
     /**
      *
@@ -345,6 +326,6 @@ exports.config = {
     * @param {String} oldSessionId session ID of the old session
     * @param {String} newSessionId session ID of the new session
     */
-    //onReload: function(oldSessionId, newSessionId) {
-    //}
+    // onReload: function(oldSessionId, newSessionId) {
+    // }
 }
