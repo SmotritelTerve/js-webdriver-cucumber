@@ -1,7 +1,7 @@
-const MainMenuPage = require('../components/mainMenu.page.js');
-const ElementsPage = require('../pages/elements.page.js');
-const InputFieldAndButtonPage = require('../pages/inputFieldAndButton.page.js');
-const AlertsPage = require('../pages/alerts.page.js');
+const MainMenuPage = require('../po/components/mainMenu.page');
+const ElementsPage = require('../po/pages/elements.page');
+const InputFieldAndButtonPage = require('../po/pages/inputFieldAndButton.page.js');
+const AlertsPage = require('../po/pages/alerts.page');
 
 const { Before, Given, When, Then } = require('@cucumber/cucumber');
 const assert = require('assert');

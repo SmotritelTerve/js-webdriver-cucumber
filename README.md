@@ -8,16 +8,16 @@ npm run test:bdd:smoke
 
 run all test scenarios
 ```
-npm run test:bdd
+npm run bdd
 ```
 
 run test scenario with @wip tag : Work In Progress
 ```
-npm run test:bdd:wip
+npm run bdd:wip
 ```
 run negative test suite
 ```
-npm run test:bdd:negative
+npm run bdd:negative
 ```
 use as reference
 

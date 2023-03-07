@@ -8,7 +8,7 @@
     "bdd": "wdio run ./src/configs/wdio.conf.js",
     "bdd:smoke": "wdio run ./src/configs/wdio.conf.js --cucumberOpts.tagExpression '@smoke'",
     "bdd:negative": "wdio run ./src/configs/wdio.conf.js --cucumberOpts.tagExpression '@negative'",
-    "bdd:wip": "wdio run ./src/configs/wdio.conf.js --cucumberOpts.tagExpression '@wip'"
+    "bdd:wip": "wdio run ./src/configs/wdio.conf.js --tags '@wip'"
   },
   "keywords": [
     "BDD"

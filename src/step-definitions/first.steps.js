@@ -1,5 +1,5 @@
 const { Before, Given, When, Then } = require('@cucumber/cucumber')
-const HomePage = require('../pages/home.page');
+const HomePage = require('../po/pages/home.page');
 
 Given('the UI Playground blog open', async function () {
   HomePage.open();
